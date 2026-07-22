@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spanish Transcription &amp; QA Program — Registration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101B2D;
+    --ink-deep:#0A121F;
+    --brass:#C6992C;
+    --brass-bright:#E0B84A;
+    --paper:#F1EAD6;
+    --paper-soft:#E8E0C8;
+    --teal:#2F5D5E;
+    --rust:#A13D2B;
+    --ink-text:#EDEAE0;
+    --line:rgba(237,234,224,0.14);
+    --dark-line:rgba(16,27,45,0.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  .app{
+    display:grid;
+    grid-template-columns: 42% 58%;
+    min-height:100vh;
+  }
+  /* LEFT PANEL */
+  .brand{
+    background:
+      radial-gradient(circle at 15% 8%, rgba(198,153,44,0.13), transparent 45%),
+      radial-gradient(circle at 85% 90%, rgba(47,93,94,0.25), transparent 50%),
+      var(--ink);
+    color:var(--ink-text);
+    position:sticky;
+    top:0;
+    height:100vh;
+    padding:56px 48px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    border-right:1px solid var(--dark-line);
+  }
+  .brand-top .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--brass-bright);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:26px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;
+    height:1px;
+    background:var(--brass-bright);
+    display:inline-block;
+  }
+  .brand-top h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(32px, 3.2vw, 46px);
+    line-height:1.08;
+    letter-spacing:-0.01em;
+  }
+  .brand-top h1 em{
+    font-style:italic;
+    font-weight:500;
+    color:var(--brass-bright);
+  }
+  .langs{
+    display:flex;
+    gap:10px;
+    margin-top:26px;
+    flex-wrap:wrap;
+  }
+  .lang-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    border:1px solid var(--line);
+    padding:7px 12px;
+    border-radius:2px;
+    color:var(--ink-text);
+    opacity:0.85;
+  }
+  .brand-desc{
+    font-size:14.5px;
+    line-height:1.7;
+    color:rgba(237,234,224,0.72);
+    margin-top:22px;
+    max-width:38ch;
+  }
+
+  /* STAMP */
+  .stamp-zone{
+    position:relative;
+    height:230px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:20px 0;
+  }
+  .stamp{
+    width:190px;
+    height:190px;
+    position:relative;
+    transform:rotate(-11deg) scale(0.92);
+    transition:transform 0.5s cubic-bezier(.2,.9,.3,1.3), opacity 0.4s ease;
+    opacity:0.96;
+  }
+  .stamp.stamped{
+    animation:stampHit 0.5s cubic-bezier(.2,.85,.3,1.4);
+  }
+  @keyframes stampHit{
+    0%{ transform:rotate(-11deg) scale(1.6); opacity:0; }
+    55%{ transform:rotate(-9deg) scale(0.86); opacity:1;}
+    75%{ transform:rotate(-12deg) scale(0.98);}
+    100%{ transform:rotate(-11deg) scale(0.92); opacity:0.96;}
+  }
+  .stamp svg{ width:100%; height:100%; display:block; }
+  .stamp-ring{ fill:none; stroke-width:2.4; }
+  .stamp-text{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+  }
+
+  .brand-bottom{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:rgba(237,234,224,0.55);
+    border-top:1px solid var(--line);
+    padding-top:18px;
+    line-height:1.8;
+  }
+  .brand-bottom strong{ color:var(--ink-text); font-weight:600; }
+
+  /* RIGHT PANEL */
+  .form-side{
+    padding:64px 64px 90px;
+    max-width:760px;
+  }
+  .form-header .kicker{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin-bottom:14px;
+  }
+  .form-header h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(26px,2.4vw,34px);
+    margin-bottom:12px;
+  }
+  .form-header p{
+    font-size:15px;
+    color:#4a4536;
+    max-width:56ch;
+    line-height:1.6;
+  }
+
+  /* TOGGLE */
+  .toggle-wrap{
+    margin:38px 0 8px;
+  }
+  .toggle-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:#6b6550;
+    margin-bottom:12px;
+    display:block;
+  }
+  .toggle{
+    display:inline-flex;
+    border:1.5px solid var(--ink);
+    border-radius:3px;
+    overflow:hidden;
+    background:var(--paper);
+  }
+  .toggle button{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:15px;
+    padding:13px 30px;
+    border:none;
+    background:transparent;
+    color:var(--ink);
+    cursor:pointer;
+    letter-spacing:0.01em;
+    transition:background 0.25s ease, color 0.25s ease;
+  }
+  .toggle button.active{
+    background:var(--ink);
+    color:var(--brass-bright);
+  }
+  .toggle button:not(.active):hover{
+    background:rgba(16,27,45,0.06);
+  }
+  .toggle-hint{
+    font-size:13px;
+    color:#7a7458;
+    margin-top:10px;
+    font-style:italic;
+    font-family:'Fraunces', serif;
+  }
+
+  /* FORM */
+  form{ margin-top:34px; }
+  fieldset{ border:none; }
+  .field-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px 24px;
+  }
+  .field{ display:flex; flex-direction:column; gap:8px; }
+  .field.full{ grid-column:1 / -1; }
+  label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+    color:#5c5640;
+  }
+  input, select, textarea{
+    font-family:'Inter', sans-serif;
+    font-size:15px;
+    padding:13px 14px;
+    border:1.5px solid rgba(16,27,45,0.22);
+    background:#faf7ee;
+    border-radius:2px;
+    color:var(--ink);
+    outline:none;
+    transition:border-color 0.2s ease, background 0.2s ease;
+  }
+  textarea{ resize:vertical; min-height:88px; font-family:'Inter', sans-serif; }
+  input:focus, select:focus, textarea:focus{
+    border-color:var(--teal);
+    background:#fff;
+  }
+  input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible{
+    outline:2px solid var(--brass);
+    outline-offset:2px;
+  }
+  .vendor-only{
+    display:none;
+  }
+  .vendor-only.show{ display:flex; }
+  .vendor-only.show.full{ display:flex; }
+
+  .checkline{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:13.5px;
+    color:#4a4536;
+    line-height:1.5;
+    margin-top:6px;
+  }
+  .checkline input{ margin-top:3px; width:16px; height:16px; accent-color: var(--teal); flex-shrink:0; padding:0;}
+
+  .submit-row{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-top:38px;
+  }
+  .submit-btn{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:16px;
+    background:var(--ink);
+    color:var(--brass-bright);
+    border:none;
+    padding:16px 34px;
+    border-radius:3px;
+    cursor:pointer;
+    letter-spacing:0.01em;
+    transition:transform 0.15s ease, background 0.2s ease;
+  }
+  .submit-btn:hover{ background:var(--ink-deep); transform:translateY(-1px); }
+  .submit-btn:disabled{ opacity:0.55; cursor:wait; transform:none; }
+  .status-msg{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:#7a7458;
+  }
+  .status-msg.error{ color:var(--rust); }
+
+  .success-panel{
+    display:none;
+    margin-top:34px;
+    padding:30px 32px;
+    border:1.5px solid var(--ink);
+    background:var(--paper-soft);
+    border-radius:3px;
+    align-items:center;
+    gap:22px;
+  }
+  .success-panel.show{ display:flex; }
+  .success-code{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--teal);
+    margin-top:6px;
+  }
+  .success-panel h3{
+    font-family:'Fraunces', serif;
+    font-size:20px;
+    font-weight:600;
+  }
+  .success-panel p{ font-size:13.5px; color:#5c5640; margin-top:4px; }
+
+  @media (max-width: 980px){
+    .app{ grid-template-columns:1fr; }
+    .brand{ position:relative; height:auto; padding:44px 28px; }
+    .form-side{ padding:44px 28px 70px; }
+    .field-grid{ grid-template-columns:1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .stamp, .stamp.stamped{ animation:none !important; transition:none !important; }
+    .submit-btn:hover{ transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- LEFT: BRAND / STAMP -->
+  <aside class="brand">
+    <div class="brand-top">
+      <div class="eyebrow">Spanish Transcription &amp; QA</div>
+      <h1>Transcribe and<br><em>verify</em> native<br>Spanish audio.</h1>
+      <div class="langs">
+        <span class="lang-tag">ESPAÑOL · SPAIN</span>
+        <span class="lang-tag">TRANSCRIPTION</span>
+        <span class="lang-tag">QUALITY ASSURANCE</span>
+      </div>
+      <p class="brand-desc">We're onboarding native Spanish (Spain) speakers and vendor teams for a live transcription and QA project on the Magic Data platform. 15 positions open, fully remote.</p>
+    </div>
+
+    <div class="stamp-zone">
+      <div class="stamp" id="stampEl">
+        <svg viewBox="0 0 200 200">
+          <defs>
+            <path id="circlePath" d="M 100,100 m -78,0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0" />
+          </defs>
+          <circle class="stamp-ring" cx="100" cy="100" r="92" stroke="var(--brass-bright)" opacity="0.9"/>
+          <circle class="stamp-ring" cx="100" cy="100" r="78" stroke="var(--brass-bright)" opacity="0.55"/>
+          <circle cx="100" cy="100" r="45" fill="none" stroke="var(--brass-bright)" stroke-width="1.4" opacity="0.7"/>
+          <text font-size="11" letter-spacing="3" fill="var(--brass-bright)">
+            <textPath href="#circlePath" startOffset="2%">REGISTERED CONTRIBUTOR · SPANISH QA PROGRAM ·</textPath>
+          </text>
+          <text id="stampCenterText" x="100" y="96" text-anchor="middle" class="stamp-text" font-size="21" fill="var(--brass-bright)">INDIVIDUAL</text>
+          <text x="100" y="118" text-anchor="middle" class="stamp-text" font-size="10" fill="var(--brass-bright)" opacity="0.75" letter-spacing="2">15 POSITIONS OPEN</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="brand-bottom">
+      <div><strong>Compensation</strong> — $18 / hour · Fully remote</div>
+      <div><strong>Contact</strong> — Siyam, Operational Manager · +8801600866444</div>
+    </div>
+  </aside>
+
+  <!-- RIGHT: FORM -->
+  <main class="form-side">
+    <div class="form-header">
+      <div class="kicker">Registration — Freelancers &amp; Vendors</div>
+      <h2>Apply for the Spanish Transcription &amp; QA project</h2>
+      <p>Native Spanish (Spain) speakers with transcription and/or QA experience. Only 15 positions available — early applications get priority.</p>
+    </div>
+
+    <div class="toggle-wrap">
+      <span class="toggle-label">I'm registering as</span>
+      <div class="toggle" role="tablist" aria-label="Applicant type">
+        <button type="button" id="btnIndividual" class="active" role="tab" aria-selected="true">Individual</button>
+        <button type="button" id="btnVendor" role="tab" aria-selected="false">Vendor / Agency</button>
+      </div>
+      <p class="toggle-hint" id="toggleHint">Applying on your own behalf, using your own business inbox.</p>
+    </div>
+
+    <form id="regForm">
+      <div class="field-grid">
+        <div class="field">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" name="Full Name" required autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="Email Address" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="whatsapp">WhatsApp Number</label>
+          <input type="tel" id="whatsapp" name="WhatsApp Number" required placeholder="+country code number">
+        </div>
+        <div class="field">
+          <label for="country">Country of Residence</label>
+          <input type="text" id="country" name="Country of Residence" required>
+        </div>
+        <div class="field">
+          <label for="role">Applying For</label>
+          <select id="role" name="Applying For" required>
+            <option value="" disabled selected>Select role</option>
+            <option value="Transcription">Transcription</option>
+            <option value="Quality Assurance">Quality Assurance</option>
+            <option value="Both">Both</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="yearsExp">Years of Experience</label>
+          <input type="number" id="yearsExp" name="Years of Experience" min="0" required>
+        </div>
+
+        <!-- VENDOR-ONLY FIELDS -->
+        <div class="field vendor-only" id="vf-agency">
+          <label for="agencyName">Agency / Vendor Name</label>
+          <input type="text" id="agencyName" name="Agency Name">
+        </div>
+        <div class="field vendor-only" id="vf-team">
+          <label for="teamSize">Contributor Team Size</label>
+          <input type="number" id="teamSize" name="Team Size" min="1">
+        </div>
+
+        <div class="field full">
+          <label for="experience">Relevant Experience</label>
+          <textarea id="experience" name="Relevant Experience" required placeholder="Brief background in transcription, QA, language work, or managing contributor teams."></textarea>
+        </div>
+
+        <div class="field full checkline">
+          <input type="checkbox" id="confirmBox" required>
+          <label for="confirmBox" style="text-transform:none; letter-spacing:normal; font-family:'Inter',sans-serif; font-size:13.5px; color:#4a4536;">
+            I confirm I am a native Spanish (Spain) speaker and can commit to meeting quality standards and deadlines for this project.
+          </label>
+        </div>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="submit-btn" id="submitBtn">Submit Application</button>
+        <span class="status-msg" id="statusMsg"></span>
+      </div>
+    </form>
+
+    <div class="success-panel" id="successPanel">
+      <svg width="42" height="42" viewBox="0 0 42 42" fill="none"><circle cx="21" cy="21" r="20" stroke="#2F5D5E" stroke-width="2"/><path d="M12 21.5L18 27L30 14" stroke="#2F5D5E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div>
+        <h3>Application received</h3>
+        <p>We'll reach out on WhatsApp with onboarding steps.</p>
+        <div class="success-code" id="refCode"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  // ---------------------------------------------------------------
+  // CONFIG: paste your Google Apps Script Web App URL here.
+  // See setup instructions provided separately (apps-script.gs).
+  // ---------------------------------------------------------------
+  const GOOGLE_SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+  const btnIndividual = document.getElementById('btnIndividual');
+  const btnVendor = document.getElementById('btnVendor');
+  const toggleHint = document.getElementById('toggleHint');
+  const stampEl = document.getElementById('stampEl');
+  const stampCenterText = document.getElementById('stampCenterText');
+  const vendorFields = document.querySelectorAll('.vendor-only');
+  let applicantType = 'Individual';
+
+  function setType(type){
+    applicantType = type;
+    const isVendor = type === 'Vendor';
+    btnIndividual.classList.toggle('active', !isVendor);
+    btnVendor.classList.toggle('active', isVendor);
+    btnIndividual.setAttribute('aria-selected', String(!isVendor));
+    btnVendor.setAttribute('aria-selected', String(isVendor));
+
+    vendorFields.forEach(el => el.classList.toggle('show', isVendor));
+    document.getElementById('agencyName').required = isVendor;
+    document.getElementById('teamSize').required = isVendor;
+
+    toggleHint.textContent = isVendor
+      ? "Registering to onboard and manage a team of native-speaking contributors."
+      : "Applying on your own behalf, using your own business inbox.";
+
+    stampCenterText.textContent = isVendor ? 'VENDOR' : 'INDIVIDUAL';
+    stampEl.classList.remove('stamped');
+    void stampEl.offsetWidth; // restart animation
+    stampEl.classList.add('stamped');
+  }
+
+  btnIndividual.addEventListener('click', () => setType('Individual'));
+  btnVendor.addEventListener('click', () => setType('Vendor'));
+
+  const form = document.getElementById('regForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const statusMsg = document.getElementById('statusMsg');
+  const successPanel = document.getElementById('successPanel');
+  const refCode = document.getElementById('refCode');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    statusMsg.textContent = '';
+    statusMsg.classList.remove('error');
+
+    const data = {
+      'Applicant Type': applicantType,
+      'Full Name': document.getElementById('fullName').value,
+      'Email Address': document.getElementById('email').value,
+      'WhatsApp Number': document.getElementById('whatsapp').value,
+      'Country of Residence': document.getElementById('country').value,
+      'Applying For': document.getElementById('role').value,
+      'Years of Experience': document.getElementById('yearsExp').value,
+      'Agency Name': document.getElementById('agencyName').value || '',
+      'Team Size': document.getElementById('teamSize').value || '',
+      'Relevant Experience': document.getElementById('experience').value,
+      'Submitted At': new Date().toISOString()
+    };
+
+    if (GOOGLE_SCRIPT_URL.includes('PASTE_YOUR')) {
+      statusMsg.textContent = 'Form not yet connected to a Google Sheet — see apps-script.gs setup notes.';
+      statusMsg.classList.add('error');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
+
+    try {
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const code = 'ESQ-' + Date.now().toString(36).toUpperCase();
+      refCode.textContent = 'Reference: ' + code;
+      form.reset();
+      setType('Individual');
+      successPanel.classList.add('show');
+      form.style.display = 'none';
+    } catch (err) {
+      statusMsg.textContent = 'Something went wrong — please try again.';
+      statusMsg.classList.add('error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Application';
+    }
+  });
+</script>
+</body>
+</html>
